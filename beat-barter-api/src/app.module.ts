@@ -3,6 +3,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { RefreshTokensModule } from './refresh-tokens/refresh-tokens.module';
 import { EmailTokensModule } from './email-tokens/email-tokens.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { EmailTokensModule } from './email-tokens/email-tokens.module';
     UsersModule,
     RefreshTokensModule,
     EmailTokensModule,
+    MailModule,
   ],
 })
 export class AppModule {}
