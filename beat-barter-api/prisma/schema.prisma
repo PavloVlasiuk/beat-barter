@@ -12,3 +12,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum State {
+  APPROVED
+  PENDING
+  DECLINED
+}
+
+model User {
+  id           String        @id @default(uuid())
+  username     String        @unique
+  email        String        @unique
+  password     String
+  state        State
+  refreshToken RefreshToken?
+  emailTokens  EmailToken[]
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model RefreshToken {
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique @map("user_id")
+  token     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("refresh_tokens")
+}
+
+enum TokenAssignment {
+  VERIFICATION
+  RESETTING
+}
+
+model EmailToken {
+  token           String          @id @default(uuid())
+  User            User            @relation(fields: [email], references: [email], onDelete: Cascade)
+  email           String
+  tokenAssignment TokenAssignment @map("token_assignment")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @default(now()) @updatedAt @map("updated_at")
+
+  @@map("email_tokens")
+}
