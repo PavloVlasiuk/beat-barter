@@ -18,16 +18,35 @@ import {
   IdenticalPasswordException,
   InvalidEmailTokenException,
 } from './exceptions';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
+  private readonly jwtSecret: string;
+  private readonly jwtAccessExpiresIn: string;
+  private readonly jwtRefreshExpiresIn: string;
+  private readonly frontUrl: string;
+
   constructor(
     private readonly usersService: UsersService,
     private readonly emailTokensService: EmailTokensService,
     private readonly refreshTokensService: RefreshTokensService,
     private readonly mailService: MailService,
     private readonly jwtService: JwtService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.jwtSecret = this.configService.get<string>('auth.jwt.secret');
+
+    this.jwtAccessExpiresIn = this.configService.get<string>(
+      'auth.jwt.accessExpiresIn',
+    );
+
+    this.jwtRefreshExpiresIn = this.configService.get<string>(
+      'auth.jwt.refreshExpiresIn',
+    );
+
+    this.frontUrl = this.configService.get<string>('app.frontUrl');
+  }
 
   async validateUser(username: string, password: string) {
     const userExists = await this.usersService.find({ username });
@@ -147,7 +166,7 @@ export class AuthService {
       subject: 'Request to change password',
       message:
         'To change your password follow link below. It is valid during an hour.',
-      link: `${process.env.FRONT_BASE_URL}/verify/${emailToken}`,
+      link: `${this.frontUrl}/verify/${emailToken}`,
     });
   }
 
@@ -210,8 +229,8 @@ export class AuthService {
     const payload = this.createPayload(user);
 
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: process.env.JWT_TTL,
-      secret: process.env.JWT_SECRET,
+      expiresIn: this.jwtAccessExpiresIn,
+      secret: this.jwtSecret,
     });
 
     return { accessToken };
@@ -220,15 +239,15 @@ export class AuthService {
   private getTokens(user: User): IJwtTokens {
     const payload = this.createPayload(user);
 
-    const secret = process.env.JWT_SECRET;
+    const secret = this.jwtSecret;
 
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: process.env.JWT_TTL,
+      expiresIn: this.jwtAccessExpiresIn,
       secret,
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: process.env.JWT_REFRESH_TTL,
+      expiresIn: this.jwtRefreshExpiresIn,
       secret,
     });
 
@@ -263,7 +282,7 @@ export class AuthService {
       subject: 'Email verification on "Beat Barter"',
       message:
         'To verify your email follow link below. It is valid during a hour.',
-      link: `${process.env.FRONT_BASE_URL}/verify/${token}`,
+      link: `${this.frontUrl}/verify/${token}`,
     });
   }
 

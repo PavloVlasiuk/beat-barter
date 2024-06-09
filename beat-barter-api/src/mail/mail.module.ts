@@ -3,28 +3,33 @@ import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.MAIL_HOST,
-        secure: false,
-        auth: {
-          user: process.env.MAIL_USERNAME,
-          pass: process.env.MAIL_PASSWORD,
+    MailerModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        transport: {
+          host: configService.get<string>('email.host'),
+          secure: false,
+          auth: {
+            user: configService.get<string>('email.user'),
+            pass: configService.get<string>('email.password'),
+          },
         },
-      },
-      defaults: {
-        from: '"BEAT BARTER" <noreply@beat-barter.com>',
-      },
-      template: {
-        dir: join(__dirname, 'templates'),
-        adapter: new HandlebarsAdapter(),
-        options: {
-          strict: true,
+        defaults: {
+          from: configService.get<string>('email.from'),
         },
-      },
+        template: {
+          dir: join(__dirname, 'templates'),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
+      }),
+      imports: [ConfigModule],
+      inject: [ConfigService],
     }),
   ],
   providers: [MailService],
