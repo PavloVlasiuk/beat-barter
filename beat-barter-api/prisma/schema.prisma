@@ -24,7 +24,7 @@ model User {
   username     String        @unique
   email        String        @unique
   password     String
-  state        State
+  state        State         @default(PENDING)
   refreshToken RefreshToken?
   emailTokens  EmailToken[]
   createdAt    DateTime      @default(now()) @map("created_at")
@@ -34,7 +34,7 @@ model User {
 }
 
 model RefreshToken {
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @unique @map("user_id")
   token     String
   createdAt DateTime @default(now()) @map("created_at")
@@ -50,7 +50,7 @@ enum TokenAssignment {
 
 model EmailToken {
   token           String          @id @default(uuid())
-  User            User            @relation(fields: [email], references: [email], onDelete: Cascade)
+  user            User            @relation(fields: [email], references: [email], onDelete: Cascade)
   email           String
   tokenAssignment TokenAssignment @map("token_assignment")
   createdAt       DateTime        @default(now()) @map("created_at")
