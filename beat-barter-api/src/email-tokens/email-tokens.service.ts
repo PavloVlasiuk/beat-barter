@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmailTokenDto } from './dto';
 import { EmailTokensRepository } from './email-tokens.repository';
-import { EmailToken } from '@prisma/client';
+import { EmailToken, Prisma } from '@prisma/client';
 
 @Injectable()
 export class EmailTokensService {
@@ -18,12 +18,12 @@ export class EmailTokensService {
     });
   }
 
-  async find(token: string): Promise<EmailToken | null> {
-    return this.emailTokensRepository.find({ token });
+  async find(where: Prisma.EmailTokenWhereInput): Promise<EmailToken | null> {
+    return this.emailTokensRepository.find(where);
   }
 
   async delete(token: string): Promise<EmailToken> {
-    const tokenExists = await this.find(token);
+    const tokenExists = await this.find({ token });
 
     if (!tokenExists) {
       throw new NotFoundException('Email token is not found');
