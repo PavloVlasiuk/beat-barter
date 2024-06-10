@@ -6,12 +6,12 @@ class StorageService {
         localStorage.setItem(StorageKeys.RefreshToken, refreshToken);
     }
 
-    getAccessToken() {
-        return localStorage.getItem(StorageKeys.AccessToken);
+    getAccessToken() :string {
+        return localStorage.getItem(StorageKeys.AccessToken)!;
     }
 
-    getRefreshToken() {
-        return localStorage.getItem(StorageKeys.RefreshToken);
+    getRefreshToken() :string {
+        return localStorage.getItem(StorageKeys.RefreshToken)!;
     }
 }
 
