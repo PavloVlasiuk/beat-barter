@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import configs from './configs';
 import { SpotifyModule } from './spotify/spotify.module';
+import { YoutubeMusicModule } from './youtube-music/youtube-music.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SpotifyModule } from './spotify/spotify.module';
       load: configs,
     }),
     SpotifyModule,
+    YoutubeMusicModule,
   ],
 })
 export class AppModule {}
