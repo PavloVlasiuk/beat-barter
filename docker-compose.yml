@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  beat-db:
+    image: postgres:latest
+    container_name: beat-db
+    restart: always
+    env_file:
+      - ./beat-barter-api/.env
+    environment:
+      POSTGRES_USER: hohol
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: beat-db
+    networks:
+      - net
+    ports:
+      - 5432:5432
+  
+  api:
+    build:
+      context: ./beat-barter-api
+      dockerfile: Dockerfile
+    container_name: beat-barter-api
+    restart: always
+    depends_on:
+      - beat-db
+    networks:
+      - net
+    ports:
+      - 3000:3000
+
+networks:
+  net:
+    driver: bridge
