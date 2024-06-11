@@ -3,7 +3,12 @@ import { instance } from "./http-client.constants";
 import storageService from "../storage/storage.service";
 import toastErrorHandler, { ToastErrorHandler } from "./toast-error-handler";
 
-class HttpClient {
+export interface IHttpClient {
+  get<T>(url: string, isAuth?: boolean, headers?: Record<string, string>): Promise<T | null>
+
+  post<T>(url: string, data?: any, isAuth?: boolean, headers?: Record<string, string>): Promise<T | null>
+}
+class HttpClient implements IHttpClient {
   private readonly axios: AxiosInstance;
   private readonly errorHandler: ToastErrorHandler;
 
@@ -37,6 +42,8 @@ class HttpClient {
       this.errorHandler.handle(error.message, 'error');
       console.log(error);
     }
+
+    return null;
   }
 
   async post<T>(url: string, data?: any, isAuth = false, headers?: Record<string, string>) {
@@ -54,6 +61,8 @@ class HttpClient {
       this.errorHandler.handle(error.message, 'error');
       console.log(error);
     }
+
+    return null;
   }
 }
 
