@@ -17,7 +17,7 @@ export class MailService {
       .sendMail({
         to,
         subject,
-        template: resolve('./src/modules/email/templates/template.hbs'),
+        template: resolve('./src/mail/templates/template.hbs'),
         context: {
           message,
           link,

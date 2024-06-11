@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { UsersRepository } from './users.repository';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, State, User } from '@prisma/client';
 import { AlreadyExistsException } from './exceptions/already-exists.exception';
 
 @Injectable()
@@ -12,6 +12,10 @@ export class UsersService {
     const userExists = await this.usersRepository.find({
       OR: [{ username: data.username }, { email: data.email }],
     });
+
+    if (userExists && userExists.state === State.PENDING) {
+      return this.usersRepository.update({ id: userExists.id }, data);
+    }
 
     if (userExists) {
       throw new AlreadyExistsException();
