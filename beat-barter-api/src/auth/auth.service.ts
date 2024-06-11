@@ -78,13 +78,13 @@ export class AuthService {
       throw new AlreadyRegisteredException();
     }
 
-    await this.requestEmailVerification(email);
-
     const hash = await this.hashPassword(password);
 
     const data = { username, email, password: hash };
 
     await this.usersService.create(data);
+
+    await this.requestEmailVerification(email);
   }
 
   async verify(emailToken: string): Promise<IJwtTokens> {
@@ -131,6 +131,8 @@ export class AuthService {
 
   async getMe(id: string): Promise<User> {
     const user = await this.usersService.find({ id });
+
+    delete user.password;
 
     return user;
   }
@@ -188,22 +190,24 @@ export class AuthService {
 
   async updatePassword(
     { oldOne, newOne }: UpdatePasswordDto,
-    userId: string,
+    user: User,
   ): Promise<IJwtTokens> {
+    await this.validateUser(user.username, oldOne);
+
     if (oldOne === newOne) {
       throw new IdenticalPasswordException();
     }
 
     const hash = await this.hashPassword(newOne);
 
-    const user = await this.usersService.update(
-      { id: userId },
+    const updatedUser = await this.usersService.update(
+      { id: user.id },
       { password: hash },
     );
 
-    const tokens = this.getTokens(user);
+    const tokens = this.getTokens(updatedUser);
 
-    await this.refreshTokensService.updateByUserId(user.id, {
+    await this.refreshTokensService.updateByUserId(updatedUser.id, {
       token: tokens.refreshToken,
     });
 
@@ -214,6 +218,10 @@ export class AuthService {
     const user = await this.usersService.find({
       OR: [{ username }, { email }],
     });
+
+    if (user && user.state === State.PENDING) {
+      return false;
+    }
 
     return !!user;
   }
@@ -310,13 +318,13 @@ export class AuthService {
     email: string,
     tokenAssignment: TokenAssignment,
   ): Promise<void> {
-    const { token } = await this.emailTokensService.find({
+    const tokenExists = await this.emailTokensService.find({
       email,
       tokenAssignment,
     });
 
-    if (token) {
-      await this.emailTokensService.delete(token);
+    if (tokenExists) {
+      await this.emailTokensService.delete(tokenExists.token);
     }
   }
 }

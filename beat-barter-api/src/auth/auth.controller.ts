@@ -52,7 +52,7 @@ export class AuthController {
     @Body() body: UpdatePasswordDto,
     @Request() req,
   ): Promise<IJwtTokens> {
-    return this.authService.updatePassword(body, req.user.id);
+    return this.authService.updatePassword(body, req.user);
   }
 
   @Post('forgotPassword')
