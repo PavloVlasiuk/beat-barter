@@ -1,4 +1,5 @@
 import { StorageKeys } from "../../types/enums/storage-keys.enum";
+import { Track } from "../../types/track";
 
 class StorageService {
     setTokens(accessToken: string, refreshToken: string): void {
@@ -12,6 +13,46 @@ class StorageService {
 
     getRefreshToken() :string {
         return localStorage.getItem(StorageKeys.RefreshToken)!;
+    }
+
+    setPlaylistName(name: string) {
+        localStorage.setItem(StorageKeys.PlaylistName, name);
+    }
+
+    getPlaylistName(): string {
+        const defaulName = 'Transfered playlist';
+
+        return localStorage.getItem(StorageKeys.PlaylistName) ?? defaulName;
+    }
+
+    setTracks(tracks: Array<Track>): void {
+        const tracksJson = JSON.stringify(tracks);
+
+        localStorage.setItem(StorageKeys.Tracks, tracksJson);
+    }
+
+    getTracks(): Array<Track> {
+        const tracksJson = localStorage.getItem(StorageKeys.Tracks);
+
+        return JSON.parse(tracksJson!);
+    }
+
+    setSpotifyCode(code: string) {
+        localStorage.setItem(StorageKeys.SpotifyCode, code);
+    }
+
+    getSpotifyCode(): string | null {
+        return localStorage.getItem(StorageKeys.SpotifyCode);
+    }
+
+    setSpotifyToken(token: string) {
+        localStorage.setItem(StorageKeys.SpotifyToken, token);
+    }
+
+    getSpotifyToken(): string {
+        const token = localStorage.getItem(StorageKeys.SpotifyToken);
+        // trhrow error or return false if tokens is endefined
+        return token!;
     }
 }
 

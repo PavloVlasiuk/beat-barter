@@ -1,6 +1,5 @@
-import background from '../app/background.png';
-import * as React from "react";
-import {Link, useNavigate, useNavigation, useParams, useRoutes} from "react-router-dom";
+import background from '../assets/background.png';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import authService from "../services/auth/auth.service";
 
 const Verify = () => {
@@ -13,7 +12,7 @@ const Verify = () => {
     }
 
     return (
-        <div className="flex overflow-hidden relative flex-col items-start px-20 py-20 w-full min-h-[850px] max-md:px-5 max-md:max-w-full"
+        <div className="flex  overflow-hidden relative flex-col items-start px-20 py-20 w-full min-h-[850px] max-md:px-5 max-md:max-w-full"
             style={{ backgroundImage: `url(${background})`, backgroundSize: '100% 100%', backgroundPosition: 'center', height: '100vh', fontFamily: "'Outfit', sans-serif" }}
         >
             <div className="flex-auto text-8xl leading-7 max-md:max-w-full max-md:text-2xl mt-5">

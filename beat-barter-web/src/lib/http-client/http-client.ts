@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance } from "axios";
+import { AxiosError, AxiosInstance, HttpStatusCode } from "axios";
 import { instance } from "./http-client.constants";
 import storageService from "../storage/storage.service";
 import toastErrorHandler, { ToastErrorHandler } from "./toast-error-handler";
@@ -39,7 +39,9 @@ class HttpClient implements IHttpClient {
       return res?.data;
     } catch (e) {
       const error = e as AxiosError;
-      this.errorHandler.handle(error.message, 'error');
+      if (error.response?.status !== HttpStatusCode.Unauthorized) {
+        this.errorHandler.handle(error.message, 'error');
+      }
       console.log(error);
     }
 
@@ -58,7 +60,9 @@ class HttpClient implements IHttpClient {
       return res?.data;
     } catch (e) {
       const error = e as AxiosError;
-      this.errorHandler.handle(error.message, 'error');
+      if (error.response?.status !== HttpStatusCode.Unauthorized) {
+        this.errorHandler.handle(error.message, 'error');
+      }
       console.log(error);
     }
 
