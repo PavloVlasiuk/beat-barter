@@ -1,6 +1,5 @@
-import background from '../app/background.png';
-import * as React from "react";
-import {Link, useNavigate, useNavigation, useParams, useRoutes} from "react-router-dom";
+import background from '../assets/background.png';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import authService from "../services/auth/auth.service";
 
 const Verify = () => {
