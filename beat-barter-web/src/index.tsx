@@ -1,14 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Homepage} from "./app/homepage";
+import Verify from "./pages/verify";
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+     <BrowserRouter>
+         <Routes>
+             <Route path="/" element={<Homepage />} />
+             <Route path="/verify/:token" element={<Verify />} />
+         </Routes>
+     </BrowserRouter>
   </React.StrictMode>
 );
 
