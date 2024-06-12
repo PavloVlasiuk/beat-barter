@@ -26,8 +26,10 @@ COPY --from=build /app/.env .
 
 COPY --from=build /app/prisma ./prisma
 
+COPY --from=build /app/package.json .
+
 COPY --from=build /app/node_modules ./node_modules
 
 COPY --from=build /app/dist ./dist
 
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:migrate:prod"]
