@@ -28,7 +28,7 @@ class SpotifyService {
   async transfer() {
     const spotifyToken = storageService.getSpotifyToken();
 
-    if (spotifyToken) throw new Error('Spotify user is not authenticated');
+    if (!spotifyToken) throw new Error('Spotify user is not authenticated');
 
     const playlistName = storageService.getPlaylistName();
 

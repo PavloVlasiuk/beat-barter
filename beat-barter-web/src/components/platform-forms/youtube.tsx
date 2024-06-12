@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import yt from '../../assets/youtube.png';
 import toastErrorHandler from '../../lib/http-client/toast-error-handler';
 import youtubeMusicService from '../../services/youtube-music/youtube-music.service';
-import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const YoutubeForm: FC = () => {
@@ -36,7 +35,6 @@ const YoutubeForm: FC = () => {
                 <input type="text" placeholder="Please copy and paste the URL of the YouTube Music playlist here" className="playlist-url mt-5 p-2 w-full border border-black rounded-lg" onChange={(e) => setUrl(e.target.value)} />
                 <button className="mt-5 px-4 py-2 bg-red-500 text-xl text-white font-semibold rounded-lg hover:bg-black focus:outline-none w-full" onClick={handleLoad}>Load</button>
             </div>
-            <ToastContainer />
         </div>
     );
 }

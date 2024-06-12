@@ -5,6 +5,7 @@ import background from '../assets/background.png';
 import authService from '../services/auth/auth.service';
 import { User } from '../types/user';
 import spotifyService from '../services/spotify/spotify.service';
+import { ToastContainer } from 'react-toastify';
 
 const VerifySpotify: FC = () => {
   const [user , setUser] = useState<User | null>(null);
@@ -35,6 +36,7 @@ const VerifySpotify: FC = () => {
                 <Header isAuthorized={!!user} username={user?.username}/>
             </div>
             <VerifySpotifyForm url={url}/>
+            <ToastContainer />
         </div>
     );
 }

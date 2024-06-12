@@ -37,6 +37,14 @@ class StorageService {
         return JSON.parse(tracksJson!);
     }
 
+    setSpotifyCode(code: string) {
+        localStorage.setItem(StorageKeys.SpotifyCode, code);
+    }
+
+    getSpotifyCode(): string | null {
+        return localStorage.getItem(StorageKeys.SpotifyCode);
+    }
+
     setSpotifyToken(token: string) {
         localStorage.setItem(StorageKeys.SpotifyToken, token);
     }

@@ -3,5 +3,6 @@ export enum StorageKeys {
     RefreshToken = 'RefreshToken',
     PlaylistName = 'PlaylistName',
     Tracks = 'Tracks',
+    SpotifyCode = 'SpotifyCode',
     SpotifyToken = 'SpotifyToken',
 }

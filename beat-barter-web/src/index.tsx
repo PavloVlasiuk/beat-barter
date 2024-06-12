@@ -6,6 +6,7 @@ import Homepage from "./app/homepage";
 import Verify from "./pages/verify";
 import YoutubeMusic from './pages/youtube-music';
 import VerifySpotify from './pages/verify-spotify';
+import Transfer from './pages/transfer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +19,7 @@ root.render(
              <Route path="/verify/:token" element={<Verify />} />
              <Route path='/youtube-music' element={<YoutubeMusic />} />
              <Route path='/verify-spotify' element={<VerifySpotify />} />
+             <Route path='/transfer' element={<Transfer />} />
          </Routes>
      </BrowserRouter>
   </React.StrictMode>

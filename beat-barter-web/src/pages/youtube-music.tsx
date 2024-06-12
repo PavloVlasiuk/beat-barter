@@ -6,6 +6,7 @@ import { YoutubeForm } from '../components/platform-forms/youtube';
 import background from '../assets/background.png';
 import { User } from '../types/user';
 import authService from '../services/auth/auth.service';
+import { ToastContainer } from 'react-toastify';
 
 const YoutubeMusic: React.FC = () => {
     const [user , setUser] = useState<User | null>(null);
@@ -28,6 +29,7 @@ const YoutubeMusic: React.FC = () => {
                 <Header isAuthorized={!!user} username={user?.username} />
             </div>
             <YoutubeForm />
+            <ToastContainer />
         </div>
     );
 
