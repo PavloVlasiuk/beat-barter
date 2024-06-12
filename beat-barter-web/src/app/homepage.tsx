@@ -8,22 +8,17 @@ import { Header } from '../components/header';
 import authService from "../services/auth/auth.service";
 
 import background from './background.png';
-
-interface User {
-    id: string;
-    username: string;
-    email: string;
-}
+import { User } from "../types/user";
 
 const Homepage = () => {
     const [showSignUp, setShowSignUp] = useState<boolean>(false);
     const [showLogIn, setShowLogIn] = useState<boolean>(false);
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user , setUser] = useState<User | null>(null);
 
     const getProfile = async () => {
         const user = await authService.getProfile();
-        setUser(user as any)
+        setUser(user)
     }
 
     useEffect(() => {

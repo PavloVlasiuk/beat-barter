@@ -3,6 +3,7 @@ import storageService from "../../lib/storage/storage.service";
 import { ILoginUser } from "./interfaces/login-user.interface";
 import { IRegisterUser } from "./interfaces/register-user.interface";
 import { ITokensResponse } from "./interfaces/tokens-response.interface";
+import {User} from "../../types/user";
 
 class AuthService {
   private readonly httpClient: IHttpClient;
@@ -15,26 +16,24 @@ class AuthService {
     await this.httpClient.post('/auth/register', user);
   }
 
-  async verify(emailToken: string): Promise<ITokensResponse | null> {
+  async verify(emailToken: string): Promise<void> {
     const tokens = await this.httpClient.post<ITokensResponse>('/auth/verify/' + emailToken);
 
     storageService.setTokens(tokens!.accessToken, tokens!.refreshToken);
 
-    return tokens;
   }
 
-  async login(user: ILoginUser): Promise<ITokensResponse | null> {
+  async login(user: ILoginUser): Promise<void> {
     const tokens = await this.httpClient.post<ITokensResponse>('/auth/login', user);
 
     if (tokens) {
       storageService.setTokens(tokens!.accessToken, tokens!.refreshToken);
     }
 
-    return tokens;
   }
 
   async getProfile() {
-    return await this.httpClient.get('/auth/me', true);
+    return await this.httpClient.get<User>('/auth/me', true);
   }
 }
 
