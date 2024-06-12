@@ -9,4 +9,9 @@ export class YoutubeMusicController {
   async getPlaylistTracks(@Param('id') id: string) {
     return await this.youtubeMusicService.getPlaylistTracks(id);
   }
+
+  @Get('playlist/name/:id')
+  async getPlaylistName(@Param('id') id: string) {
+    return await this.youtubeMusicService.getPlaylistName(id);
+  }
 }
