@@ -3,15 +3,14 @@ import yt from '../../assets/youtube.png';
 import toastErrorHandler from '../../lib/http-client/toast-error-handler';
 import youtubeMusicService from '../../services/youtube-music/youtube-music.service';
 import { useNavigate } from 'react-router-dom';
+import { validateYoutubeUrl } from '../../validation/validate-youtube-url';
 
 const YoutubeForm: FC = () => {
   const [url, setUrl] = useState('');
   const navigate = useNavigate();
 
   const handleLoad = async () => {
-    const yootubeUrlRegex = /^https:\/\/music\.youtube\.com\/playlist\?list=([a-zA-Z0-9_-]+)&si=[a-zA-Z0-9_-]+$/;
-
-    const isValidUrl = yootubeUrlRegex.exec(url);
+    const isValidUrl = validateYoutubeUrl(url);
 
     if (!isValidUrl) {
       toastErrorHandler.handle('Your youtube music url is invalid', 'error');

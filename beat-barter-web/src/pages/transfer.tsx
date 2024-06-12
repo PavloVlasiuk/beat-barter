@@ -11,7 +11,10 @@ import storageService from "../lib/storage/storage.service";
 
 const Transfer: FC = () => {
   const [user , setUser] = useState<User | null>(null);
+
   const [searchParamps] = useSearchParams();
+  const codeParam = 'code';
+
   const navigate = useNavigate();
 
     const getProfile = async () => {
@@ -20,7 +23,7 @@ const Transfer: FC = () => {
     }
 
     const loginSpotify = async () => {
-      const code = searchParamps.get('code');
+      const code = searchParamps.get(codeParam);
       storageService.setSpotifyCode(code!);
 
       try {
@@ -34,7 +37,7 @@ const Transfer: FC = () => {
     useEffect(() => {
         getProfile()
 
-        const code = searchParamps.get('code');
+        const code = searchParamps.get(codeParam);
 
         const storedCode = storageService.getSpotifyCode();
   
