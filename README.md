@@ -49,7 +49,7 @@ SPOTIFY_BASE_AUTH_URL=
 SPOTIFY_API_URL=
 SPOTIFY_CLIENT_ID=
 SPOTIFY_CLIENT_SECRET=
-REDIRECT_URI=]
+REDIRECT_URI=
 
 YOUTUBE_MUSIC_API_KEY=
 YOUTUBE_MUSIC_API_URL=
@@ -80,5 +80,13 @@ npm start
 ```
 Open your web app in browser, by default it starts on  http://localhost:3000.
 
-And enjoy our application!
+# Running in docker
+You can up backend in docker environment. Just run one command:
+```bash
+docker compose up --build
+```
+This will up database, run migrations, and up the application. Then you can start frontend as described above and enjoy our app.
+
+
+
 
