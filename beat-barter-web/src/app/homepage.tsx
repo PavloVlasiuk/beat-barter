@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 
-import { SignUp } from '../components/auth-form/sign-up';
-import { LogIn } from '../components/auth-form/log-in';
-import { Header } from '../components/header';
+import SignUp from '../components/auth-forms/sign-up/page';
+import LogIn from '../components/auth-forms/sign-in/page';
+import Header from '../components/header';
 
 import authService from "../services/auth/auth.service";
 

@@ -1,13 +1,13 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
-import './log-in.css';
-import {ILoginUser} from "../../services/auth/interfaces/login-user.interface";
-import authService from "../../services/auth/auth.service";
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import {ILoginUser} from "../../../services/auth/interfaces/login-user.interface";
+import authService from "../../../services/auth/auth.service";
+import './sign-in.css'
 
-interface LogInProps {
+interface SignInProps {
     toggle: () => void;
 }
 
-const LogIn: FC<LogInProps> = (props) => {
+const SignIn: FC<SignInProps> = (props) => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
@@ -45,4 +45,4 @@ const LogIn: FC<LogInProps> = (props) => {
     );
 };
 
-export { LogIn };
+export default SignIn;

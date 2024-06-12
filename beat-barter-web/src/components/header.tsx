@@ -1,5 +1,5 @@
-import React, {FC, MouseEvent, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import { FC, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
     toggleSignUp: () => void;
@@ -49,4 +49,4 @@ const Header: FC<HeaderProps> = ({ toggleSignUp, toggleLogIn, isAuthorized , use
     );
 }
 
-export { Header };
+export default Header;

@@ -1,6 +1,7 @@
-import React, { FC, useState, ChangeEvent, FormEvent } from 'react';
-import {IRegisterUser} from "../../services/auth/interfaces/register-user.interface";
-import authService from "../../services/auth/auth.service";
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { IRegisterUser } from "../../../services/auth/interfaces/register-user.interface";
+import authService from "../../../services/auth/auth.service";
+import './sign-up.css';
 
 interface SignUpProps {
     toggle: () => void;
@@ -49,4 +50,4 @@ const SignUp: FC<SignUpProps> = (props) => {
     );
 };
 
-export { SignUp };
+export default SignUp;
